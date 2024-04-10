@@ -6,7 +6,8 @@ const {
     register,
     login,
     getCurrentUser,
-    update
+    update,
+    getUserById
 } = require("../controllers/UserController");
 
 // Middleware
@@ -17,9 +18,12 @@ const { imageUpload } = require("../middlewares/imageUpload");
 
 // Routes
 // authGuard requer que o usuário esteja autenticado
+// endpoint, middleware, função do controller
 router.post("/register", userCreateValidation(), validate, register); // define o endpoint
 router.post("/login", loginValidation(), validate, login); // define o endpoint
 router.get("/profile", authGuard, getCurrentUser);
 router.put("/", authGuard, userUpdateValidation(), validate, imageUpload.single("profileImage"), update);
+router.get("/:id", getUserById)
+
 
 module.exports = router; // será utilizado em Router.js
